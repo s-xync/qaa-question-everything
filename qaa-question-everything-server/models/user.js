@@ -17,10 +17,10 @@ const userSchema = mongoose.Schema({
     type : String,
     required : true
   },
-  questions : {
+  questionIDs : {
     type : [mongoose.Schema.Types.ObjectId]
   },
-  answers : {
+  answerIDs : {
     type : [mongoose.Schema.Types.ObjectId]
   },
   createdOn : {

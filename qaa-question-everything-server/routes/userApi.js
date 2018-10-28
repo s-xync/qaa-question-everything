@@ -1,8 +1,9 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator/check');
 const bcrypt = require('bcryptjs');
-const User = require('../models/user.js');
 
+const User = require('../models/user.js');
+const UserSession = require('../models/userSession.js')
 
 const saltRounds = 10;
 
@@ -35,38 +36,83 @@ userApiRouter.post('/signup',
   firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
   lastName = lastName ? lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase() : lastName;
   email = email.toLowerCase();
-  bcrypt.hash(password, saltRounds, (err, hash) => {
+  const passwordHash = bcrypt.hashSync(password, saltRounds);
+  const newUser = {
+    firstName : firstName,
+    lastName : lastName,
+    email: email,
+    passwordHash : passwordHash
+  };
+
+  User.addUser(newUser, (err, user) => {
     if(err){
-      console.log(err);
+      // comes from catch blocks of mongoose objects
       return res.json({
         success : false,
-        message : "Error : Internal server error"
+        message : "Error : " + err.message
       });
     }else{
-      const passwordHash = hash;
-      const newUser = {
-        firstName : firstName,
-        lastName : lastName,
-        email: email,
-        passwordHash : passwordHash
-      };
-      User.addUser(newUser, (err, user) => {
-        if(err){
-          // comes from catch blocks of mongoose objects
-          res.json({
-            success : false,
-            message : "Error : " + err.message
-          });
-        }else{
-          res.json({
-            success : true,
-            message : "User registered successfully"
-          });
-        }
-
+      return res.json({
+        success : true,
+        message : "User registered successfully"
       });
     }
   });
 });
 
+// /api/user/signin
+userApiRouter.post('/signin',
+(req, res) => {
+  let { email, password } = req.body;
+  const query = {
+    email : email.toLowerCase()
+  };
+
+  User.find(query, (err, users) => {
+    if(err){
+      console.log(err);
+    }else{
+      if(users.length != 1){
+        return res.json({
+          success : false,
+          message : "User not found"
+        });
+      }else{
+        const retrievedUser = users[0];
+        if(bcrypt.compareSync(password, retrievedUser.passwordHash)){
+          newUserSession = {
+            userID : retrievedUser._id
+          };
+          UserSession.create(newUserSession, (err, userSession) => {
+            if(err){
+              console.log(err);
+              return res.json({
+                success : false,
+                message : "Internal server error"
+              });
+            }else{
+              // the token has to be stored in client's local storage
+              return res.json({
+                success : true,
+                message : "Signed in successfully",
+                token : userSession._id
+              });
+            }
+          });
+        }else{
+          return res.json({
+            success : false,
+            message : "Password did not match"
+          });
+        }
+      }
+    }
+  });
+});
+
+// /api/user/checktoken
+userApiRouter.post('/checktoken',
+(req, res) => {
+
+});
 module.exports = userApiRouter;
