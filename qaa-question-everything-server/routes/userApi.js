@@ -65,12 +65,17 @@ userApiRouter.post('/signin',
 (req, res) => {
   let { email, password } = req.body;
   const query = {
-    email : email.toLowerCase()
+    email : email.toLowerCase(),
+    isDeleted : false
   };
 
   User.find(query, (err, users) => {
     if(err){
       console.log(err);
+      return res.json({
+        success : false,
+        message : "Internal server error"
+      });
     }else{
       if(users.length != 1){
         return res.json({
@@ -111,8 +116,60 @@ userApiRouter.post('/signin',
 });
 
 // /api/user/checktoken
-userApiRouter.post('/checktoken',
+userApiRouter.post('/checksession',
 (req, res) => {
-
+  const { token } = req.body;
+  const query = {
+    _id : token,
+    isDeleted : false
+  };
+  UserSession.find(query, (err, userSessions) => {
+    if(err){
+      console.log(err);
+      return res.json({
+        success : false,
+        message : "Internal server error"
+      });
+    }else{
+      if(userSessions.length != 1){
+        return res.json({
+          success : false,
+          message : "Session not found"
+        });
+      }else{
+        const { userID } = userSessions[0];
+        const query = {
+          _id : userID,
+          isDeleted : false
+        };
+        User.find(query, (err, users) => {
+          if(err){
+            console.log(err);
+            return res.json({
+              success : false,
+              message : "Internal sever error"
+            });
+          }else{
+            if(users.length != 1){
+              return res.json({
+                success : false,
+                message : "User not found"
+              });
+            }else{
+              const { _id, firstName, lastName, email, questionIDs, answerIDs } = users[0];
+              const userDetails = { _id, firstName, lastName, email, questionIDs, answerIDs };
+              return res.json({
+                success : true,
+                message : "Session found",
+                userDetails : userDetails
+              });
+            }
+          }
+        });
+      }
+    }
+  });
 });
+
+
 module.exports = userApiRouter;
