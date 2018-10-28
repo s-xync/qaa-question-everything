@@ -115,8 +115,8 @@ userApiRouter.post('/signin',
   });
 });
 
-// /api/user/checktoken
-userApiRouter.post('/checksession',
+// /api/user/getsession
+userApiRouter.post('/getsession',
 (req, res) => {
   const { token } = req.body;
   const query = {
@@ -167,6 +167,29 @@ userApiRouter.post('/checksession',
           }
         });
       }
+    }
+  });
+});
+
+// /api/user/signout
+userApiRouter.post('/signout',
+(req, res) => {
+  const { token } = req.body;
+  const query = {
+    _id : token
+  };
+  UserSession.deleteOne(query, (err) => {
+    if(err){
+      console.log(err);
+      return res.json({
+        success : false,
+        message : "Internal server error"
+      });
+    }else{
+      return res.json({
+        success : true,
+        message : "Signed out successfully"
+      });
     }
   });
 });
