@@ -9,26 +9,64 @@ const contentApiRouter = express.Router();
 // POST /api/content/addquestion
 contentApiRouter.post('/addquestion',
 (req, res) => {
-  // { userID, head, body,  }
+  const { userID, head, body } = req.body;
+  if(head.length > 25){
+    const query = {
+      _id : userID,
+      isDeleted : false
+    };
+    User.find(query, (err, users) => {
+      if(err){
+        console.log(err);
+        return res.json({
+          success : false,
+          message : "Internal server error"
+        });
+      }else if(users.length != 1){
+        return res.json({
+          success : false,
+          message :"User not found"
+        });
+      }
+      else{
+        let user = users[0];
+        const newQuestion = { userID, head, body };
+        Question.create(newQuestion, (err, question) => {
+          if(err){
+            console.log(err);
+            return res.json({
+              success : false,
+              message : "Internal server error"
+            });
+          }else{
+            user.questionIDs.unshift(question._id);
+            user.save((err) => {
+              if(err){
+                console.log(err);
+                return res.json({
+                  success : false,
+                  message : "Internal server error"
+                });
+              }else{
+                return res.json({
+                  success : true,
+                  message : "Question added successfully"
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  }else{
+    return res.json({
+      success : false,
+      message : "Question cannot be short"
+    });
+  }
 });
 
-// POST /api/content/addanswer
-contentApiRouter.post('/addanswer',
-(req, res) => {
 
-});
-
-// POST /api/content/votequestion
-contentApiRouter.post('/votequestion',
-(req, res) => {
-
-});
-
-// POST /api/content/voteanswer
-contentApiRouter.post('/voteanswer',
-(req, res) => {
-
-});
 
 // GET /api/content/userquestions
 contentApiRouter.get('/userquestions',

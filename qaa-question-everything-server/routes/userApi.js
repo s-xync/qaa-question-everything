@@ -37,12 +37,7 @@ userApiRouter.post('/signup',
   lastName = lastName ? lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase() : lastName;
   email = email.toLowerCase();
   const passwordHash = bcrypt.hashSync(password, saltRounds);
-  const newUser = {
-    firstName : firstName,
-    lastName : lastName,
-    email: email,
-    passwordHash : passwordHash
-  };
+  const newUser = { firstName, lastName, email, passwordHash };
 
   const query = {
     email : newUser.email
