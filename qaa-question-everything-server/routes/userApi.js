@@ -9,7 +9,7 @@ const saltRounds = 10;
 
 const userApiRouter = express.Router();
 
-// /api/user/signup
+// POST /api/user/signup
 userApiRouter.post('/signup',
 [
   // firstName should exist
@@ -60,7 +60,7 @@ userApiRouter.post('/signup',
   });
 });
 
-// /api/user/signin
+// POST /api/user/signin
 userApiRouter.post('/signin',
 (req, res) => {
   let { email, password } = req.body;
@@ -115,7 +115,7 @@ userApiRouter.post('/signin',
   });
 });
 
-// /api/user/getsession
+// POST /api/user/getsession
 userApiRouter.post('/getsession',
 (req, res) => {
   const { token } = req.body;
@@ -171,7 +171,7 @@ userApiRouter.post('/getsession',
   });
 });
 
-// /api/user/signout
+// POST /api/user/signout
 userApiRouter.post('/signout',
 (req, res) => {
   const { token } = req.body;
@@ -193,6 +193,5 @@ userApiRouter.post('/signout',
     }
   });
 });
-
 
 module.exports = userApiRouter;

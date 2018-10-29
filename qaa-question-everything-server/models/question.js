@@ -9,7 +9,7 @@ const questionSchema = mongoose.Schema({
     type : String,
     require : true
   },
-  detail : {
+  body : {
     type : String
   },
   votes : {
