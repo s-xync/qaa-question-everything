@@ -261,7 +261,45 @@ contentApiRouter.post('/voteanswer',
 // GET /api/content/userquestions
 contentApiRouter.get('/userquestions',
 (req, res) => {
-
+  const { userID } = req.query;
+  const query = {
+    _id : userID,
+    isDeleted : false
+  };
+  User.find(query, (err, users) => {
+    if(err){
+      console.log(err);
+      return res.json({
+        success : false,
+        message : "Internal server error"
+      });
+    }else if(users.length != 1){
+      return res.json({
+        success : false,
+        message : "User not found"
+      });
+    }else{
+      const query = {
+        userID : userID,
+        isDeleted : false
+      };
+      Question.find(query, null, {sort : {date : -1}}, (err, questions) => {
+        if(err){
+          console.log(err);
+          return res.json({
+            success : false,
+            message : "Internal server error"
+          });
+        }else{
+          return res.json({
+            success : true,
+            message : "Questions retrieval successful",
+            questions : questions
+          });
+        }
+      });
+    }
+  });
 });
 
 // GET /api/content/useranswers
