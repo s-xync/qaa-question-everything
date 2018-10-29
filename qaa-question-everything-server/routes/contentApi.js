@@ -156,6 +156,57 @@ contentApiRouter.post('/addanswer',
   }
 });
 
+// POST /api/content/votequestion
+contentApiRouter.post('/votequestion',
+(req, res) => {
+  const { questionID, type } = req.body;
+  const query = {
+    _id : questionID,
+    isDeleted : false
+  };
+
+  Question.find(query, (err, questions) => {
+    if(err){
+      console.log(err);
+      return res.json({
+        success : false,
+        message : "Internal server error"
+      });
+    }else if(questions.length != 1){
+      return res.json({
+        success : false,
+        message : "Question not found"
+      });
+    }else{
+      let question = questions[0];
+      if(type === "up"){
+        question.votes = question.votes + 1;
+      }else if(type === "down"){
+        question.votes = question.votes - 1;
+      }else{
+        return res.json({
+          success : false,
+          message : "Not a valid type of vote"
+        });
+      }
+      question.save((err) => {
+        if(err){
+          console.log(err);
+          return res.json({
+            success : false,
+            message : "Internal server error"
+          });
+        }else{
+          return res.json({
+            success : true,
+            message : "Voted successfully"
+          });
+        }
+      });
+    }
+  });
+});
+
 // GET /api/content/userquestions
 contentApiRouter.get('/userquestions',
 (req, res) => {
