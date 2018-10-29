@@ -66,7 +66,95 @@ contentApiRouter.post('/addquestion',
   }
 });
 
-
+// POST /api/content/addanswer
+contentApiRouter.post('/addanswer',
+(req, res) => {
+  const { userID, questionID, body } = req.body;
+  if(body.length > 25){
+    const query = {
+      _id : userID,
+      isDeleted : false
+    };
+    User.find(query, (err, users) => {
+      if(err){
+        console.log(err);
+        return res.json({
+          success : false,
+          message : "Internal server error"
+        });
+      }else if(users.length != 1){
+        return res.json({
+          success : false,
+          message : "User not found"
+        });
+      }else{
+        const query = {
+          _id : questionID,
+          isDeleted : false
+        }
+        Question.find(query, (err, questions) => {
+          if(err){
+            console.log(err);
+            return res.json({
+              success : false,
+              message : "Internal server error"
+            });
+          }else if(questions.length != 1){
+            return res.json({
+              success : false,
+              message : "Question not found"
+            });
+          }else{
+            let user = users[0];
+            let question = questions[0];
+            const newAnswer = { userID, questionID, body };
+            Answer.create(newAnswer, (err, answer) => {
+              if(err){
+                console.log(err);
+                return res.json({
+                  success : false,
+                  message : "Internal server error"
+                });
+              }else{
+                user.answerIDs.unshift(answer._id);
+                user.save((err) => {
+                  if(err){
+                    console.log(err);
+                    return res.json({
+                      success : false,
+                      message : "Internal server error"
+                    });
+                  }else{
+                    question.answerIDs.unshift(answer._id);
+                    question.save((err) => {
+                      if(err){
+                        console.log(err);
+                        return res.json({
+                          success : false,
+                          message : "Internal server error"
+                        });
+                      }else{
+                        return res.json({
+                          success : true,
+                          message : "Answer added successfully"
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  }else{
+    return res.json({
+      success : false,
+      message : "Answer cannot be short"
+    });
+  }
+});
 
 // GET /api/content/userquestions
 contentApiRouter.get('/userquestions',
