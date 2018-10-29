@@ -349,7 +349,45 @@ contentApiRouter.get('/useranswers',
 // GET /api/content/questionanswers
 contentApiRouter.get('/questionanswers',
 (req, res) => {
-
+  const { questionID } = req.query;
+  const query = {
+    _id : questionID,
+    isDeleted : false
+  };
+  Question.find(query, (err, questions) => {
+    if(err){
+      console.log(err);
+      return res.json({
+        success : false,
+        message : "Internal server error"
+      });
+    }else if(questions.length != 1){
+      return res.json({
+        success : false,
+        message : "Question not found"
+      });
+    }else{
+      const query = {
+        questionID : questionID,
+        isDeleted : false
+      };
+      Answer.find(query, null, {sort : {date : -1}}, (err, answers) => {
+        if(err){
+          console.log(err);
+          return res.json({
+            success : false,
+            message : "Internal server error"
+          });
+        }else{
+          return res.json({
+            success : true,
+            message : "Answers retrieval successful",
+            answers : answers
+          });
+        }
+      });
+    }
+  });
 });
 
 module.exports = contentApiRouter;
