@@ -36,24 +36,3 @@ const userSchema = mongoose.Schema({
 });
 
 const User = module.exports = mongoose.model('User', userSchema);
-
-User.addUser = (newUser, callback) => {
-  const query = {
-    email : newUser.email
-  };
-  User.find(query, (err, users) => {
-    if(err){
-      console.log(err);
-    }else if(users.length != 0){
-      try {
-        throw ({
-          "message" : "Email already exists"
-        });
-      }catch(e){
-        callback(e);
-      }
-    }else{
-      User.create(newUser, callback);
-    }
-  });
-}

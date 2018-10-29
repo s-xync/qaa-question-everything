@@ -28,7 +28,7 @@ userApiRouter.post('/signup',
     });
     return res.json({
       success : false,
-      message : "Error : Invalid" + errorString
+      message : "Invalid" + errorString
     });
   }
 
@@ -44,18 +44,36 @@ userApiRouter.post('/signup',
     passwordHash : passwordHash
   };
 
-  User.addUser(newUser, (err, user) => {
+  const query = {
+    email : newUser.email
+  };
+
+  User.find(query, (err, users) => {
     if(err){
-      // comes from catch blocks of mongoose objects
+      console.log(err);
       return res.json({
         success : false,
-        message : "Error : " + err.message
+        message : "Internal server error"
+      });
+    }else if(users.length != 0){
+      return res.json({
+        success : false,
+        message : "Email already exists"
       });
     }else{
-      return res.json({
-        success : true,
-        message : "User registered successfully"
-      });
+      User.create(newUser, (err, user) => {
+        if(err){
+          return res.json({
+            success : false,
+            message : "Internal server error"
+          });
+        }else{
+          return res.json({
+            success : true,
+            message : "User registered successfully"
+          });
+        }
+      })
     }
   });
 });

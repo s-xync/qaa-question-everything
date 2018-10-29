@@ -9,7 +9,7 @@ const contentApiRouter = express.Router();
 // POST /api/content/addquestion
 contentApiRouter.post('/addquestion',
 (req, res) => {
-
+  // { userID, head, body,  }
 });
 
 // POST /api/content/addanswer
