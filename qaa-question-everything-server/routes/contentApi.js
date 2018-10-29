@@ -305,7 +305,45 @@ contentApiRouter.get('/userquestions',
 // GET /api/content/useranswers
 contentApiRouter.get('/useranswers',
 (req, res) => {
-
+  const { userID } = req.query;
+  const query = {
+    _id : userID,
+    isDeleted : false
+  };
+  User.find(query, (err, users) => {
+    if(err){
+      console.log(err);
+      return res.json({
+        success : false,
+        message : "Internal server error"
+      });
+    }else if(users.length != 1){
+      return res.json({
+        success : false,
+        message : "User not found"
+      });
+    }else{
+      const query = {
+        userID : userID,
+        isDeleted : false
+      };
+      Answer.find(query, null, {sort : {date : -1}}, (err, answers) => {
+        if(err){
+          console.log(err);
+          return res.json({
+            success : false,
+            message : "Internal server error"
+          });
+        }else{
+          return res.json({
+            success : true,
+            message : "Answers retrieval successful",
+            answers : answers
+          });
+        }
+      });
+    }
+  });
 });
 
 // GET /api/content/questionanswers
