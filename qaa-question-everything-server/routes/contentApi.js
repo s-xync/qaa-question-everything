@@ -7,13 +7,13 @@ const Answer = require('../models/answer.js');
 const contentApiRouter = express.Router();
 
 /*
-  * POST /api/content/addquestion
-  * POST /api/content/addanswer
-  * POST /api/content/votequestion
-  * POST /api/content/voteanswer
-  * GET /api/content/userquestions
-  * GET /api/content/useranswers
-  * GET /api/content/questionanswers
+* POST /api/content/addquestion
+* POST /api/content/addanswer
+* POST /api/content/votequestion
+* POST /api/content/voteanswer
+* GET /api/content/userquestions
+* GET /api/content/useranswers
+* GET /api/content/questionanswers
 */
 
 // POST /api/content/addquestion

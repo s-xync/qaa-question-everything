@@ -10,10 +10,10 @@ const saltRounds = 10;
 const userApiRouter = express.Router();
 
 /*
- * POST /api/user/signup
- * POST /api/user/signin
- * POST /api/user/getsession
- * POST /api/user/signout
+* POST /api/user/signup
+* POST /api/user/signin
+* POST /api/user/getsession
+* POST /api/user/signout
 */
 
 // POST /api/user/signup
