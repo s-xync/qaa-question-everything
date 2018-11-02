@@ -1,41 +1,28 @@
 import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { NavbarBrand, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import propTypes from 'prop-types';
-import { toggleIsOpen } from '../actions';
 
 class NavBar extends Component {
-  toggle = () => {
-    this.props.toggleIsOpen();
-  }
-
   render(){
     return(
-      <div>
-        <Navbar color="dark" dark expand="md">
-          <NavbarBrand tag={Link} to="/">reactstrap</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.props.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink tag={Link} to="/account">Login / Signup</NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
-      </div>
+      <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <NavbarBrand tag={Link} to="/">QAA</NavbarBrand>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ml-auto">
+            <NavItem>
+              <NavLink tag={Link} to="/signup">Signup</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={Link} to="/login">Login</NavLink>
+            </NavItem>
+          </ul>
+        </div>
+      </nav>
     );
   }
 }
 
-NavBar.propTypes = {
-  isOpen : propTypes.bool.isRequired,
-  toggleIsOpen : propTypes.func.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  isOpen : state.navBar.isOpen
-});
-
-export default connect(mapStateToProps,{ toggleIsOpen })(NavBar);
+export default NavBar;
