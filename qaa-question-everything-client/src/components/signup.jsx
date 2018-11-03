@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { resetStateOfSignupLogin, setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword, handleSignupSubmit } from '../actions/formActions';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import { resetStateOfSignupLogin, setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword, setSignupDone } from '../actions/formActions';
 
 class Signup extends Component {
 
@@ -9,9 +11,36 @@ class Signup extends Component {
     this.props.resetStateOfSignupLogin();
   }
 
+  callHandleSignupSubmit = (e) => {
+    e.preventDefault();
+    const { apiUrl, signupInputFirstname, signupInputLastname, signupInputEmail, signupInputPassword, signupFirstnameFlag, signupLastnameFlag, signupEmailFlag, signupPasswordFlag } = this.props;
+    if(signupFirstnameFlag && signupLastnameFlag && signupEmailFlag && signupPasswordFlag){
+      axios.post(apiUrl+'/api/user/signup',{
+        firstName : signupInputFirstname,
+        lastName : signupInputLastname,
+        email : signupInputEmail,
+        password : signupInputPassword
+      }).then((response) => {
+        if(response.data.success){
+          this.props.setSignupDone();
+        }else{
+          console.log(response.data.message);
+          this.props.resetStateOfSignupLogin();
+        }
+      });
+    }
+  };
+
+  renderRedirectSignupDone = () => {
+    if(this.props.signupDone){
+      return <Redirect to="/login" />
+    }
+  };
+
   render(){
     return(
       <Fragment>
+        { this.renderRedirectSignupDone() }
         <form>
           <div className="form-group">
             <label htmlFor="signupInputFirstname">Firstname</label>
@@ -33,7 +62,7 @@ class Signup extends Component {
             <input type="password" className="form-control" id="signupInputPassword" aria-describedby="signupPasswordHelp" placeholder="Password" value={this.props.signupInputPassword} onChange={this.props.setSignupInputPassword} required/>
             <small id="signupPasswordHelp" className={"form-text "+this.props.signupPasswordHelpClass}>{this.props.signupPasswordHelp}</small>
           </div>
-          <button type="submit" className="btn btn-primary" disabled={!(this.props.signupFirstnameFlag && this.props.signupLastnameFlag && this.props.signupEmailFlag && this.props.signupPasswordFlag)} onSubmit={handleSignupSubmit}>Submit</button>
+          <button type="submit" className="btn btn-primary" disabled={!(this.props.signupFirstnameFlag && this.props.signupLastnameFlag && this.props.signupEmailFlag && this.props.signupPasswordFlag)} onClick={this.callHandleSignupSubmit}>Submit</button>
         </form>
       </Fragment>
     );
@@ -41,6 +70,7 @@ class Signup extends Component {
 }
 
 Signup.propTypes = {
+  apiUrl : propTypes.string.isRequired,
   resetStateOfSignupLogin : propTypes.func.isRequired,
   setSignupInputFirstname : propTypes.func.isRequired,
   signupInputFirstname : propTypes.string.isRequired,
@@ -62,11 +92,13 @@ Signup.propTypes = {
   signupLastnameFlag : propTypes.bool.isRequired,
   signupEmailFlag : propTypes.bool.isRequired,
   signupPasswordFlag : propTypes.bool.isRequired,
-  handleSignupSubmit : propTypes.func.isRequired
+  signupDone : propTypes.bool.isRequired,
+  setSignupDone : propTypes.func.isRequired
 };
 
 // { accountForm } = state
-const mapStateToProps = ({accountForm}) => ({
+const mapStateToProps = ({accountForm, apiUrl}) => ({
+apiUrl : apiUrl.value,
 signupInputFirstname : accountForm.signupInputFirstname,
 signupFirstnameHelpClass : accountForm.signupFirstnameHelpClass,
 signupFirstnameHelp : accountForm.signupFirstnameHelp,
@@ -82,7 +114,8 @@ signupPasswordHelp : accountForm.signupPasswordHelp,
 signupFirstnameFlag : accountForm.signupFirstnameFlag,
 signupLastnameFlag : accountForm.signupLastnameFlag,
 signupEmailFlag : accountForm.signupEmailFlag,
-signupPasswordFlag : accountForm.signupPasswordFlag
+signupPasswordFlag : accountForm.signupPasswordFlag,
+signupDone : accountForm.signupDone
 });
 
-export default connect(mapStateToProps, { setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword, resetStateOfSignupLogin, handleSignupSubmit })(Signup);
+export default connect(mapStateToProps, { setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword, resetStateOfSignupLogin, setSignupDone })(Signup);

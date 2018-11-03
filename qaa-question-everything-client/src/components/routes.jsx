@@ -10,7 +10,6 @@ import { setApiUrl } from '../actions/apiUrlActions';
 class Routes extends Component{
 
   componentWillMount(){
-    console.log(process.env.REACT_APP_SERVER_API_URL);
     this.props.setApiUrl(process.env.REACT_APP_SERVER_API_URL);
   }
 
