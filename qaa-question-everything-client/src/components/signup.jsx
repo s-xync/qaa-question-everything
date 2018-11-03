@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword } from '../actions/formActions';
@@ -6,7 +6,7 @@ import { setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, s
 class Signup extends Component {
   render(){
     return(
-      <div>
+      <Fragment>
         <form>
           <div className="form-group">
             <label htmlFor="signupInputFirstname">Firstname</label>
@@ -28,9 +28,9 @@ class Signup extends Component {
             <input type="password" className="form-control" id="signupInputPassword" aria-describedby="signupPasswordHelp" placeholder="Password" value={this.props.signupInputPassword} onChange={this.props.setSignupInputPassword} required/>
             <small id="signupPasswordHelp" className={"form-text "+this.props.signupPasswordHelpClass}>{this.props.signupPasswordHelp}</small>
           </div>
-          <button type="submit" className="btn btn-primary">Submit</button>
+          <button type="submit" className="btn btn-primary" disabled={!(this.props.signupFirstnameFlag && this.props.signupLastnameFlag && this.props.signupEmailFlag && this.props.signupPasswordFlag)}>Submit</button>
         </form>
-      </div>
+      </Fragment>
     );
   }
 }
@@ -51,7 +51,11 @@ Signup.propTypes = {
   setSignupInputPassword : propTypes.func.isRequired,
   signupInputPassword : propTypes.string.isRequired,
   signupPasswordHelpClass : propTypes.string.isRequired,
-  signupPasswordHelp : propTypes.string.isRequired
+  signupPasswordHelp : propTypes.string.isRequired,
+  signupFirstnameFlag : propTypes.bool.isRequired,
+  signupLastnameFlag : propTypes.bool.isRequired,
+  signupEmailFlag : propTypes.bool.isRequired,
+  signupPasswordFlag : propTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -66,7 +70,11 @@ const mapStateToProps = (state) => ({
   signupEmailHelp : state.accountForm.signupEmailHelp,
   signupInputPassword : state.accountForm.signupInputPassword,
   signupPasswordHelpClass : state.accountForm.signupPasswordHelpClass,
-  signupPasswordHelp : state.accountForm.signupPasswordHelp
+  signupPasswordHelp : state.accountForm.signupPasswordHelp,
+  signupFirstnameFlag : state.accountForm.signupFirstnameFlag,
+  signupLastnameFlag : state.accountForm.signupLastnameFlag,
+  signupEmailFlag : state.accountForm.signupEmailFlag,
+  signupPasswordFlag : state.accountForm.signupPasswordFlag
 });
 
 export default connect(mapStateToProps, { setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword })(Signup);

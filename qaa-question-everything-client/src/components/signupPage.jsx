@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import NavBar from './navBar';
 import Signup from './signup';
 
@@ -6,16 +6,16 @@ import Signup from './signup';
 class SignupPage extends Component{
   render(){
     return(
-      <div>
-      <NavBar />
-      <div className="row" style={{marginTop:'10%'}}>
-        <div className="col"></div>
-        <div className="col-4">
-          <Signup />
+      <Fragment>
+        <NavBar />
+        <div className="row" style={{marginTop:'10%'}}>
+          <div className="col"></div>
+          <div className="col-4">
+            <Signup />
+          </div>
+          <div className="col"></div>
         </div>
-        <div className="col"></div>
-      </div>
-      </div>
+      </Fragment>
     );
   }
 }
