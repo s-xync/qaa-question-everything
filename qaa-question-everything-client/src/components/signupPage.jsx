@@ -10,7 +10,7 @@ class SignupPage extends Component{
       <NavBar />
       <div className="row" style={{marginTop:'10%'}}>
         <div className="col"></div>
-        <div className="col-6">
+        <div className="col-4">
           <Signup />
         </div>
         <div className="col"></div>
