@@ -136,9 +136,9 @@ userApiRouter.post('/signin',
 });
 
 // POST /api/user/getsession
-userApiRouter.post('/getsession',
+userApiRouter.get('/getsession',
 (req, res) => {
-  const { token } = req.body;
+  const { token } = req.query;
   const query = {
     _id : token,
     isDeleted : false

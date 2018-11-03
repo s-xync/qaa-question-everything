@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { resetStateOfSignupLogin, setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword } from '../actions/formActions';
+import { resetStateOfSignupLogin, setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword, handleSignupSubmit } from '../actions/formActions';
 
 class Signup extends Component {
 
@@ -33,7 +33,7 @@ class Signup extends Component {
             <input type="password" className="form-control" id="signupInputPassword" aria-describedby="signupPasswordHelp" placeholder="Password" value={this.props.signupInputPassword} onChange={this.props.setSignupInputPassword} required/>
             <small id="signupPasswordHelp" className={"form-text "+this.props.signupPasswordHelpClass}>{this.props.signupPasswordHelp}</small>
           </div>
-          <button type="submit" className="btn btn-primary" disabled={!(this.props.signupFirstnameFlag && this.props.signupLastnameFlag && this.props.signupEmailFlag && this.props.signupPasswordFlag)}>Submit</button>
+          <button type="submit" className="btn btn-primary" disabled={!(this.props.signupFirstnameFlag && this.props.signupLastnameFlag && this.props.signupEmailFlag && this.props.signupPasswordFlag)} onSubmit={handleSignupSubmit}>Submit</button>
         </form>
       </Fragment>
     );
@@ -61,7 +61,8 @@ Signup.propTypes = {
   signupFirstnameFlag : propTypes.bool.isRequired,
   signupLastnameFlag : propTypes.bool.isRequired,
   signupEmailFlag : propTypes.bool.isRequired,
-  signupPasswordFlag : propTypes.bool.isRequired
+  signupPasswordFlag : propTypes.bool.isRequired,
+  handleSignupSubmit : propTypes.func.isRequired
 };
 
 // { accountForm } = state
@@ -84,4 +85,4 @@ signupEmailFlag : accountForm.signupEmailFlag,
 signupPasswordFlag : accountForm.signupPasswordFlag
 });
 
-export default connect(mapStateToProps, { setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword, resetStateOfSignupLogin })(Signup);
+export default connect(mapStateToProps, { setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword, resetStateOfSignupLogin, handleSignupSubmit })(Signup);

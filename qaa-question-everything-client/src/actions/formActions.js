@@ -180,3 +180,8 @@ export const setLoginInputPassword = (event) => (dispatch) => {
     });
   }
 };
+
+export const handleSignupSubmit = (event) => (dispatch) => {
+  event.preventDefault();
+  
+}
