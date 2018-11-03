@@ -1,9 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setLoginInputEmail, setLoginInputPassword } from '../actions/formActions';
+import { resetStateOfSignupLogin, setLoginInputEmail, setLoginInputPassword } from '../actions/formActions';
 
 class Login extends Component {
+
+  componentWillMount(){
+    this.props.resetStateOfSignupLogin();
+  }
+
   render(){
     return(
       <Fragment>
@@ -26,6 +31,7 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+  resetStateOfSignupLogin : propTypes.func.isRequired,
   setLoginInputEmail : propTypes.func.isRequired,
   loginInputEmail : propTypes.string.isRequired,
   loginEmailHelpClass : propTypes.string.isRequired,
@@ -49,4 +55,4 @@ const mapStateToProps = (state) => ({
   loginPasswordFlag : state.accountForm.loginPasswordFlag
 });
 
-export default connect(mapStateToProps, { setLoginInputEmail, setLoginInputPassword })(Login);
+export default connect(mapStateToProps, { setLoginInputEmail, setLoginInputPassword, resetStateOfSignupLogin })(Login);

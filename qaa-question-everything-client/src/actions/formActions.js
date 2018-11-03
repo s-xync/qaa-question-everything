@@ -1,4 +1,11 @@
-import { SET_SIGNUP_INPUT_FIRSTNAME, SET_SIGNUP_INPUT_LASTNAME, SET_SIGNUP_INPUT_EMAIL, SET_SIGNUP_INPUT_PASSWORD, SET_LOGIN_INPUT_EMAIL, SET_LOGIN_INPUT_PASSWORD } from './types';
+import { RESET_STATE_OF_SIGNUP_LOGIN, SET_SIGNUP_INPUT_FIRSTNAME, SET_SIGNUP_INPUT_LASTNAME, SET_SIGNUP_INPUT_EMAIL, SET_SIGNUP_INPUT_PASSWORD, SET_LOGIN_INPUT_EMAIL, SET_LOGIN_INPUT_PASSWORD } from './types';
+
+export const resetStateOfSignupLogin = () => (dispatch) => {
+  dispatch({
+    type : RESET_STATE_OF_SIGNUP_LOGIN,
+    payload : null
+  });
+};
 
 export const setSignupInputFirstname = (event) => (dispatch) => {
   const { value } = event.target;

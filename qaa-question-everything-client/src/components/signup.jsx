@@ -1,9 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword } from '../actions/formActions';
+import { resetStateOfSignupLogin, setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword } from '../actions/formActions';
 
 class Signup extends Component {
+
+  componentWillMount(){
+    this.props.resetStateOfSignupLogin();
+  }
+
   render(){
     return(
       <Fragment>
@@ -36,6 +41,7 @@ class Signup extends Component {
 }
 
 Signup.propTypes = {
+  resetStateOfSignupLogin : propTypes.func.isRequired,
   setSignupInputFirstname : propTypes.func.isRequired,
   signupInputFirstname : propTypes.string.isRequired,
   signupFirstnameHelpClass : propTypes.string.isRequired,
@@ -77,4 +83,4 @@ const mapStateToProps = (state) => ({
   signupPasswordFlag : state.accountForm.signupPasswordFlag
 });
 
-export default connect(mapStateToProps, { setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword })(Signup);
+export default connect(mapStateToProps, { setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword, resetStateOfSignupLogin })(Signup);
