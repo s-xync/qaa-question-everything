@@ -1,4 +1,4 @@
-import { RESET_STATE_OF_SIGNUP_LOGIN, SET_SIGNUP_INPUT_FIRSTNAME, SET_SIGNUP_INPUT_LASTNAME, SET_SIGNUP_INPUT_EMAIL, SET_SIGNUP_INPUT_PASSWORD, SET_LOGIN_INPUT_EMAIL, SET_LOGIN_INPUT_PASSWORD, SET_SIGNUP_DONE } from '../actions/types';
+import { RESET_STATE_OF_SIGNUP_LOGIN, SET_SIGNUP_INPUT_FIRSTNAME, SET_SIGNUP_INPUT_LASTNAME, SET_SIGNUP_INPUT_EMAIL, SET_SIGNUP_INPUT_PASSWORD, SET_LOGIN_INPUT_EMAIL, SET_LOGIN_INPUT_PASSWORD, SET_SIGNUP_DONE, SET_LOGIN_DONE } from '../actions/types';
 
 const initialState = {
   signupInputFirstname : "",
@@ -25,7 +25,8 @@ const initialState = {
   loginPasswordHelp : "",
   loginEmailFlag : false,
   loginPasswordFlag : false,
-  signupDone : false
+  signupDone : false,
+  loginDone : false
 };
 
 export default (state = initialState, action) => {
@@ -94,6 +95,12 @@ export default (state = initialState, action) => {
     return {
       ...state,
       signupDone : true
+    };
+
+    case SET_LOGIN_DONE:
+    return {
+      ...state,
+      loginDone : true
     };
 
     default:

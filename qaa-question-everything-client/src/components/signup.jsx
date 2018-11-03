@@ -11,7 +11,7 @@ class Signup extends Component {
     this.props.resetStateOfSignupLogin();
   }
 
-  callHandleSignupSubmit = (e) => {
+  handleSignupSubmit = (e) => {
     e.preventDefault();
     const { apiUrl, signupInputFirstname, signupInputLastname, signupInputEmail, signupInputPassword, signupFirstnameFlag, signupLastnameFlag, signupEmailFlag, signupPasswordFlag } = this.props;
     if(signupFirstnameFlag && signupLastnameFlag && signupEmailFlag && signupPasswordFlag){
@@ -62,7 +62,7 @@ class Signup extends Component {
             <input type="password" className="form-control" id="signupInputPassword" aria-describedby="signupPasswordHelp" placeholder="Password" value={this.props.signupInputPassword} onChange={this.props.setSignupInputPassword} required/>
             <small id="signupPasswordHelp" className={"form-text "+this.props.signupPasswordHelpClass}>{this.props.signupPasswordHelp}</small>
           </div>
-          <button type="submit" className="btn btn-primary" disabled={!(this.props.signupFirstnameFlag && this.props.signupLastnameFlag && this.props.signupEmailFlag && this.props.signupPasswordFlag)} onClick={this.callHandleSignupSubmit}>Submit</button>
+          <button type="submit" className="btn btn-primary" disabled={!(this.props.signupFirstnameFlag && this.props.signupLastnameFlag && this.props.signupEmailFlag && this.props.signupPasswordFlag)} onClick={this.handleSignupSubmit}>Submit</button>
         </form>
       </Fragment>
     );
