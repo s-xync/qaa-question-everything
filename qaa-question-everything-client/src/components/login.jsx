@@ -20,6 +20,7 @@ class Login extends Component {
         password : loginInputPassword
       }).then((response) => {
         if(response.data.success){
+          localStorage.setItem('QAA_LOGIN_TOKEN',JSON.stringify(response.data.token));
           this.props.setLoginDone();
         }else{
           console.log(response.data.message);
