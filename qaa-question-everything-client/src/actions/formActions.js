@@ -82,7 +82,7 @@ export const setSignupInputEmail = (event) => (dispatch) => {
 
 export const setSignupInputPassword = (event) => (dispatch) => {
   const { value } = event.target;
-  if(value.length > 0){
+  if(value.length >= 6){
     dispatch({
       type : SET_SIGNUP_INPUT_PASSWORD,
       payload : {
@@ -97,7 +97,7 @@ export const setSignupInputPassword = (event) => (dispatch) => {
       payload : {
         signupInputPassword : value,
         signupPasswordHelpClass : "text-danger",
-        signupPasswordHelp : "Password cannot be empty"
+        signupPasswordHelp : "Password has to be atleast 6 characters"
       }
     });
   }
