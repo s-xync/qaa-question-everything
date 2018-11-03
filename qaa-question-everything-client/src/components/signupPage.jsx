@@ -4,6 +4,7 @@ import Signup from './signup';
 
 
 class SignupPage extends Component{
+  
   render(){
     return(
       <Fragment>

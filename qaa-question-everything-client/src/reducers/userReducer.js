@@ -7,4 +7,4 @@ export default (state = {user : {}}, action) => {
     default:
     return state;
   }
-}
+};

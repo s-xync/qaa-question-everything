@@ -44,15 +44,16 @@ Login.propTypes = {
   loginPasswordFlag : propTypes.bool.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  loginInputEmail : state.accountForm.loginInputEmail,
-  loginEmailHelpClass : state.accountForm.loginEmailHelpClass,
-  loginEmailHelp : state.accountForm.loginEmailHelp,
-  loginInputPassword : state.accountForm.loginInputPassword,
-  loginPasswordHelpClass : state.accountForm.loginPasswordHelpClass,
-  loginPasswordHelp : state.accountForm.loginPasswordHelp,
-  loginEmailFlag : state.accountForm.loginEmailFlag,
-  loginPasswordFlag : state.accountForm.loginPasswordFlag
+// { accountForm } = state
+const mapStateToProps = ({accountForm}) => ({
+loginInputEmail : accountForm.loginInputEmail,
+loginEmailHelpClass : accountForm.loginEmailHelpClass,
+loginEmailHelp : accountForm.loginEmailHelp,
+loginInputPassword : accountForm.loginInputPassword,
+loginPasswordHelpClass : accountForm.loginPasswordHelpClass,
+loginPasswordHelp : accountForm.loginPasswordHelp,
+loginEmailFlag : accountForm.loginEmailFlag,
+loginPasswordFlag : accountForm.loginPasswordFlag
 });
 
 export default connect(mapStateToProps, { setLoginInputEmail, setLoginInputPassword, resetStateOfSignupLogin })(Login);

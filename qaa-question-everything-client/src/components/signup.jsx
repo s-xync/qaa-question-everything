@@ -64,23 +64,24 @@ Signup.propTypes = {
   signupPasswordFlag : propTypes.bool.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  signupInputFirstname : state.accountForm.signupInputFirstname,
-  signupFirstnameHelpClass : state.accountForm.signupFirstnameHelpClass,
-  signupFirstnameHelp : state.accountForm.signupFirstnameHelp,
-  signupInputLastname : state.accountForm.signupInputLastname,
-  signupLastnameHelpClass : state.accountForm.signupLastnameHelpClass,
-  signupLastnameHelp : state.accountForm.signupLastnameHelp,
-  signupInputEmail : state.accountForm.signupInputEmail,
-  signupEmailHelpClass : state.accountForm.signupEmailHelpClass,
-  signupEmailHelp : state.accountForm.signupEmailHelp,
-  signupInputPassword : state.accountForm.signupInputPassword,
-  signupPasswordHelpClass : state.accountForm.signupPasswordHelpClass,
-  signupPasswordHelp : state.accountForm.signupPasswordHelp,
-  signupFirstnameFlag : state.accountForm.signupFirstnameFlag,
-  signupLastnameFlag : state.accountForm.signupLastnameFlag,
-  signupEmailFlag : state.accountForm.signupEmailFlag,
-  signupPasswordFlag : state.accountForm.signupPasswordFlag
+// { accountForm } = state
+const mapStateToProps = ({accountForm}) => ({
+signupInputFirstname : accountForm.signupInputFirstname,
+signupFirstnameHelpClass : accountForm.signupFirstnameHelpClass,
+signupFirstnameHelp : accountForm.signupFirstnameHelp,
+signupInputLastname : accountForm.signupInputLastname,
+signupLastnameHelpClass : accountForm.signupLastnameHelpClass,
+signupLastnameHelp : accountForm.signupLastnameHelp,
+signupInputEmail : accountForm.signupInputEmail,
+signupEmailHelpClass : accountForm.signupEmailHelpClass,
+signupEmailHelp : accountForm.signupEmailHelp,
+signupInputPassword : accountForm.signupInputPassword,
+signupPasswordHelpClass : accountForm.signupPasswordHelpClass,
+signupPasswordHelp : accountForm.signupPasswordHelp,
+signupFirstnameFlag : accountForm.signupFirstnameFlag,
+signupLastnameFlag : accountForm.signupLastnameFlag,
+signupEmailFlag : accountForm.signupEmailFlag,
+signupPasswordFlag : accountForm.signupPasswordFlag
 });
 
 export default connect(mapStateToProps, { setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword, resetStateOfSignupLogin })(Signup);
