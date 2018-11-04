@@ -7,7 +7,7 @@ import App from './app';
 import SignupPage from './signupPage';
 import LoginPage from './loginPage';
 import { setApiUrl } from '../actions/apiUrlActions';
-import { setValidSession } from '../actions/userActions';
+import { setValidSession, setUserDetails } from '../actions/userActions';
 
 class Routes extends Component{
 
@@ -56,7 +56,7 @@ class Routes extends Component{
           }
         }).then((response) => {
           if(response.data.success){
-            // this.props.setUserDetails(response.data.userDetails)
+            this.props.setUserDetails(response.data.userDetails);
           }else{
             this.props.setValidSession(false);
             localStorage.removeItem('QAA_LOGIN_TOKEN');
@@ -85,12 +85,13 @@ Routes.propTypes = {
   apiUrl : propTypes.string.isRequired,
   setApiUrl : propTypes.func.isRequired,
   setValidSession : propTypes.func.isRequired,
-  validSession : propTypes.bool.isRequired
-}
+  validSession : propTypes.bool.isRequired,
+  setUserDetails : propTypes.func.isRequired
+};
 
 const mapStateToProps = ({ apiUrl, user }) => ({
   apiUrl : apiUrl.value,
   validSession : user.validSession
 });
 
-export default connect(mapStateToProps, { setApiUrl, setValidSession })(Routes);
+export default connect(mapStateToProps, { setApiUrl, setValidSession, setUserDetails })(Routes);
