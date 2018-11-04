@@ -293,7 +293,7 @@ contentApiRouter.get('/userquestions',
         userID : userID,
         isDeleted : false
       };
-      Question.find(query, null, {sort : {date : -1}}, (err, questions) => {
+      Question.find(query, null, {sort : {votes : -1, date : -1}}, (err, questions) => {
         if(err){
           console.log(err);
           return res.json({
@@ -381,7 +381,7 @@ contentApiRouter.get('/questionanswers',
         questionID : questionID,
         isDeleted : false
       };
-      Answer.find(query, null, {sort : {date : -1}}, (err, answers) => {
+      Answer.find(query, null, {sort : {votes : -1, date : -1}}, (err, answers) => {
         if(err){
           console.log(err);
           return res.json({
