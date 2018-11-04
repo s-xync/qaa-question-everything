@@ -12,7 +12,8 @@ const userApiRouter = express.Router();
 /*
 * POST /api/user/signup
 * POST /api/user/signin
-* POST /api/user/getsession
+* GET /api/user/checksession
+* GET /api/user/getsession
 * POST /api/user/signout
 */
 
@@ -130,6 +131,37 @@ userApiRouter.post('/signin',
             message : "Password did not match"
           });
         }
+      }
+    }
+  });
+});
+
+// POST /api/user/checksession
+userApiRouter.get('/checksession',
+(req, res) => {
+  const { token } = req.query;
+  const query = {
+    _id : token,
+    isDeleted : false
+  };
+  UserSession.find(query, (err, userSessions) => {
+    if(err){
+      console.log(err);
+      return res.json({
+        success : false,
+        message : "Internal server error"
+      });
+    }else{
+      if(userSessions.length != 1){
+        return res.json({
+          success : false,
+          message : "Session not found"
+        });
+      }else{
+        return res.json({
+          success : true,
+          message : "Session is valid"
+        });
       }
     }
   });
