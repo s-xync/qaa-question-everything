@@ -1,9 +1,18 @@
-import { GET_SESSION } from '../actions/types.js';
+import { SET_VALID_SESSION } from '../actions/types.js';
 
-export default (state = {user : {}}, action) => {
-  switch(action.type){
-    case GET_SESSION:
-    return state;
+const initialState = {
+  validSession : false
+}
+
+export default (state = initialState, action) => {
+  switch (action.type) {
+
+    case SET_VALID_SESSION:
+    return {
+      ...state,
+      validSession : true
+    };
+
     default:
     return state;
   }
