@@ -4,12 +4,12 @@ import Signup from './signup';
 
 
 class SignupPage extends Component{
-  
+
   render(){
     return(
       <Fragment>
         <NavBar />
-        <div className="row" style={{marginTop:'10%'}}>
+        <div className="row" style={{marginTop:'3%'}}>
           <div className="col"></div>
           <div className="col-4">
             <Signup />

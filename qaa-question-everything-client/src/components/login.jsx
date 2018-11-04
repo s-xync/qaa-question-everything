@@ -41,6 +41,9 @@ class Login extends Component {
     return(
       <Fragment>
         { this.renderRedirectValidSession() }
+        <hr className="my-4"/>
+        <h1 style={{textAlign:"center"}}>Login</h1>
+        <hr className="my-4"/>
         <form>
           <div className="form-group">
             <label htmlFor="loginInputEmail">Email address</label>
@@ -52,7 +55,12 @@ class Login extends Component {
             <input type="password" className="form-control" id="loginInputPassword" aria-describedby="loginPasswordHelp" placeholder="Password" value={this.props.loginInputPassword} onChange={this.props.setLoginInputPassword} required/>
             <small id="loginPasswordHelp" className={"form-text "+this.props.loginPasswordHelpClass}>{this.props.loginPasswordHelp}</small>
           </div>
-          <button type="submit" className="btn btn-primary" disabled={!(this.props.loginEmailFlag && this.props.loginPasswordFlag)} onClick={this.handleLoginSubmit}>Submit</button>
+          <br/>
+          <div style={{textAlign:"center"}}>
+          <button type="submit" className="btn btn-primary btn-lg" disabled={!(this.props.loginEmailFlag && this.props.loginPasswordFlag)} onClick={this.handleLoginSubmit}>Submit</button>
+        </div>
+        <hr className="my-4"/>
+        <br/>
         </form>
       </Fragment>
     );
