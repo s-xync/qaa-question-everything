@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
     case SET_VALID_SESSION:
     return {
       ...state,
-      validSession : true
+      validSession : action.payload.flag
     };
 
     default:

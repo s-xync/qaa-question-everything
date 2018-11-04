@@ -22,7 +22,7 @@ class Login extends Component {
       }).then((response) => {
         if(response.data.success){
           localStorage.setItem('QAA_LOGIN_TOKEN',JSON.stringify(response.data.token));
-          this.props.setValidSession();
+          this.props.setValidSession(true);
         }else{
           console.log(response.data.message);
           this.props.resetStateOfSignupLogin();
