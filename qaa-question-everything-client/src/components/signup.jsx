@@ -31,6 +31,12 @@ class Signup extends Component {
     }
   };
 
+  renderRedirectValidSession = () => {
+    if(this.props.validSession){
+      return <Redirect to="/" />
+    }
+  };
+
   renderRedirectSignupDone = () => {
     if(this.props.signupDone){
       return <Redirect to="/login" />
@@ -40,6 +46,7 @@ class Signup extends Component {
   render(){
     return(
       <Fragment>
+        { this.renderRedirectValidSession() }
         { this.renderRedirectSignupDone() }
         <form>
           <div className="form-group">
@@ -93,11 +100,11 @@ Signup.propTypes = {
   signupEmailFlag : propTypes.bool.isRequired,
   signupPasswordFlag : propTypes.bool.isRequired,
   signupDone : propTypes.bool.isRequired,
-  setSignupDone : propTypes.func.isRequired
+  setSignupDone : propTypes.func.isRequired,
+  validSession : propTypes.bool.isRequired
 };
 
-// { accountForm } = state
-const mapStateToProps = ({accountForm, apiUrl}) => ({
+const mapStateToProps = ({ accountForm, apiUrl, user }) => ({
 apiUrl : apiUrl.value,
 signupInputFirstname : accountForm.signupInputFirstname,
 signupFirstnameHelpClass : accountForm.signupFirstnameHelpClass,
@@ -115,7 +122,8 @@ signupFirstnameFlag : accountForm.signupFirstnameFlag,
 signupLastnameFlag : accountForm.signupLastnameFlag,
 signupEmailFlag : accountForm.signupEmailFlag,
 signupPasswordFlag : accountForm.signupPasswordFlag,
-signupDone : accountForm.signupDone
+signupDone : accountForm.signupDone,
+validSession : user.validSession
 });
 
 export default connect(mapStateToProps, { setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword, resetStateOfSignupLogin, setSignupDone })(Signup);
