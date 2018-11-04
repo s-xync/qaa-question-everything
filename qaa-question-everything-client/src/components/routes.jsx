@@ -7,6 +7,7 @@ import App from './app';
 import SignupPage from './signupPage';
 import LoginPage from './loginPage';
 import { setApiUrl } from '../actions/apiUrlActions';
+import { setValidSession } from '../actions/userActions';
 
 class Routes extends Component{
 
@@ -16,19 +17,25 @@ class Routes extends Component{
 
   componentDidUpdate(prevProps, prevState){
     if(prevProps.apiUrl !== this.props.apiUrl){
-      this.checkAndGetSession();
+      this.checkSession();
     }
   }
 
-  checkAndGetSession = () => {
+  checkSession = () => {
     if(this.props.apiUrl){
       if(localStorage.getItem('QAA_LOGIN_TOKEN')){
         const qaaLoginToken = JSON.parse(localStorage.getItem('QAA_LOGIN_TOKEN'));
-        axios.get(this.props.apiUrl+"/api/user/getsession",{
+        axios.get(this.props.apiUrl+"/api/user/checksession",{
           params:{
             token : qaaLoginToken
           }
-        }).then(response => console.log(response));
+        }).then((response) => {
+          if(response.data.success){
+            this.props.setValidSession();
+          }else{
+            console.log(response.data.message);
+          }
+        });
       }
     }
   };
@@ -49,11 +56,12 @@ class Routes extends Component{
 
 Routes.propTypes = {
   apiUrl : propTypes.string.isRequired,
-  setApiUrl : propTypes.func.isRequired
+  setApiUrl : propTypes.func.isRequired,
+  setValidSession : propTypes.func.isRequired
 }
 
-const mapStateToProps = ({apiUrl}) => ({
+const mapStateToProps = ({ apiUrl }) => ({
   apiUrl : apiUrl.value
 });
 
-export default connect(mapStateToProps, { setApiUrl })(Routes);
+export default connect(mapStateToProps, { setApiUrl, setValidSession })(Routes);
