@@ -1,4 +1,4 @@
-import { SET_VALID_SESSION, SET_USER_DETAILS } from '../actions/types.js';
+import { SET_VALID_SESSION, SET_USER_DETAILS, REMOVE_STATE_OF_USER } from '../actions/types.js';
 
 const initialState = {
   validSession : false
@@ -23,6 +23,11 @@ export default (state = initialState, action) => {
       lastName,
       questionIDs,
       answerIDs
+    };
+
+    case REMOVE_STATE_OF_USER:
+    return {
+      ...initialState
     };
 
     default:

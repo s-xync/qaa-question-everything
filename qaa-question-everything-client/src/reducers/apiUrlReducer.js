@@ -1,6 +1,10 @@
 import { SET_API_URL } from '../actions/types';
 
-export default (state = {value:""}, action) => {
+const initialState = {
+  value : ""
+};
+
+export default (state = initialState, action) => {
   switch (action.type) {
 
     case SET_API_URL:

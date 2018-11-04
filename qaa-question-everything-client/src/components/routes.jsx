@@ -3,11 +3,12 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import axios from 'axios';
+import { setApiUrl } from '../actions/apiUrlActions';
+import { setValidSession, setUserDetails } from '../actions/userActions';
 import App from './app';
 import SignupPage from './signupPage';
 import LoginPage from './loginPage';
-import { setApiUrl } from '../actions/apiUrlActions';
-import { setValidSession, setUserDetails } from '../actions/userActions';
+import ProfilePage from './profilePage';
 
 class Routes extends Component{
 
@@ -74,6 +75,7 @@ class Routes extends Component{
           <Route path='/' exact component={App} />
           <Route path='/signup' exact component={SignupPage} />
           <Route path='/login' exact component={LoginPage} />
+          <Route path='/profile' exact component={ProfilePage} />
           <Route component={App} />
         </Switch>
       </BrowserRouter>
