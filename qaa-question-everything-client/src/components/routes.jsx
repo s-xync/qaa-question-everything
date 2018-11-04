@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+import propTypes from 'prop-types';
 import axios from 'axios';
 import App from './app';
 import SignupPage from './signupPage';
@@ -13,13 +14,24 @@ class Routes extends Component{
     this.props.setApiUrl(process.env.REACT_APP_SERVER_API_URL);
   }
 
-  // componentDidMount(){
-  //   axios.get('http://localhost:8080/api/user/getsession',{
-  //     params : {
-  //       token : "5bd71dbc5f708a61e0e74f0e"
-  //     }
-  //   }).then(response => console.log(response));
-  // }
+  componentDidUpdate(prevProps, prevState){
+    if(prevProps.apiUrl !== this.props.apiUrl){
+      this.checkAndGetSession();
+    }
+  }
+
+  checkAndGetSession = () => {
+    if(this.props.apiUrl){
+      if(localStorage.getItem('QAA_LOGIN_TOKEN')){
+        const qaaLoginToken = JSON.parse(localStorage.getItem('QAA_LOGIN_TOKEN'));
+        axios.get(this.props.apiUrl+"/api/user/getsession",{
+          params:{
+            token : qaaLoginToken
+          }
+        }).then(response => console.log(response));
+      }
+    }
+  };
 
   render(){
     return(
@@ -35,4 +47,13 @@ class Routes extends Component{
   }
 }
 
-export default connect(null, { setApiUrl })(Routes);
+Routes.propTypes = {
+  apiUrl : propTypes.string.isRequired,
+  setApiUrl : propTypes.func.isRequired
+}
+
+const mapStateToProps = ({apiUrl}) => ({
+  apiUrl : apiUrl.value
+});
+
+export default connect(mapStateToProps, { setApiUrl })(Routes);
