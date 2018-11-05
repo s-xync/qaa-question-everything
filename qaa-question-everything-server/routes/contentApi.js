@@ -125,7 +125,7 @@ contentApiRouter.post('/addanswer',
                   message : "Internal server error"
                 });
               }else{
-                user.answerIDs.unshift(answer._id);
+                user.answeredQuestionIDs.unshift(questionID);
                 user.save((err) => {
                   if(err){
                     console.log(err);
@@ -134,7 +134,7 @@ contentApiRouter.post('/addanswer',
                       message : "Internal server error"
                     });
                   }else{
-                    question.answeredQuestionIDs.unshift(questionID);
+                    question.answerIDs.unshift(answer._id);
                     question.save((err) => {
                       if(err){
                         console.log(err);
