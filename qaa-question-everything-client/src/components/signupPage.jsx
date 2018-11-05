@@ -1,4 +1,7 @@
 import React, { Component, Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
+import propTypes from 'prop-types';
+import { connect } from 'react-redux';
 import NavBar from './navBar';
 import Signup from './signup';
 
@@ -6,19 +9,35 @@ import Signup from './signup';
 class SignupPage extends Component{
 
   render(){
-    return(
-      <Fragment>
-        <NavBar />
-        <div className="row" style={{marginTop:'3%'}}>
-          <div className="col"></div>
-          <div className="col-4">
-            <Signup />
+    if(this.props.validSession){
+      return(
+        <Fragment>
+          return <Redirect to="/profile" />
+        </Fragment>
+      );
+    }else{
+      return(
+        <Fragment>
+          <NavBar />
+          <div className="row" style={{marginTop:'3%'}}>
+            <div className="col"></div>
+            <div className="col-4">
+              <Signup />
+            </div>
+            <div className="col"></div>
           </div>
-          <div className="col"></div>
-        </div>
-      </Fragment>
-    );
+        </Fragment>
+      );
+    }
   }
 }
 
-export default SignupPage;
+SignupPage.propTypes = {
+  validSession : propTypes.bool.isRequired
+};
+
+const mapStateToProps = ({ user }) => ({
+  validSession : user.validSession
+});
+
+export default connect(mapStateToProps, {  })(SignupPage);

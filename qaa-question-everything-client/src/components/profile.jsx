@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { setValidSession, removeStateOfUser } from '../actions/userActions';
 
@@ -26,16 +25,9 @@ class Profile extends Component{
     }
   }
 
-  renderRedirectNotValidSession = () => {
-    if(!this.props.validSession){
-      return <Redirect to="/" />
-    }
-  };
-
   render(){
     return(
       <Fragment>
-        { this.renderRedirectNotValidSession() }
         <div className="row" style={{textAlign:"center"}}>
           <div className="col-8">
             <h3>{this.props.firstName + " " + this.props.lastName}</h3>
@@ -51,14 +43,12 @@ class Profile extends Component{
 
 Profile.propTypes = {
   apiUrl : propTypes.string.isRequired,
-  validSession : propTypes.bool.isRequired,
   firstName : propTypes.string,
   lastName : propTypes.string
 };
 
 const mapStateToProps = ({ apiUrl, user }) => ({
   apiUrl : apiUrl.value,
-  validSession : user.validSession,
   firstName : user.firstName,
   lastName : user.lastName
 });

@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { resetStateOfSignupLogin, setLoginInputEmail, setLoginInputPassword } from '../actions/formActions';
 import { setValidSession } from '../actions/userActions';
@@ -31,16 +30,10 @@ class Login extends Component {
     }
   };
 
-  renderRedirectValidSession = () => {
-    if(this.props.validSession){
-      return <Redirect to="/" />
-    }
-  };
 
   render(){
     return(
       <Fragment>
-        { this.renderRedirectValidSession() }
         <hr className="my-4"/>
         <h1 style={{textAlign:"center"}}>Login</h1>
         <hr className="my-4"/>
@@ -57,10 +50,10 @@ class Login extends Component {
           </div>
           <br/>
           <div style={{textAlign:"center"}}>
-          <button type="submit" className="btn btn-primary btn-lg" disabled={!(this.props.loginEmailFlag && this.props.loginPasswordFlag)} onClick={this.handleLoginSubmit}>Submit</button>
-        </div>
-        <hr className="my-4"/>
-        <br/>
+            <button type="submit" className="btn btn-primary btn-lg" disabled={!(this.props.loginEmailFlag && this.props.loginPasswordFlag)} onClick={this.handleLoginSubmit}>Submit</button>
+          </div>
+          <hr className="my-4"/>
+          <br/>
         </form>
       </Fragment>
     );
@@ -80,21 +73,19 @@ Login.propTypes = {
   loginPasswordHelp : propTypes.string.isRequired,
   loginEmailFlag : propTypes.bool.isRequired,
   loginPasswordFlag : propTypes.bool.isRequired,
-  setValidSession : propTypes.func.isRequired,
-  validSession : propTypes.bool.isRequired
+  setValidSession : propTypes.func.isRequired
 };
 
 const mapStateToProps = ({ accountForm, apiUrl, user }) => ({
-apiUrl : apiUrl.value,
-loginInputEmail : accountForm.loginInputEmail,
-loginEmailHelpClass : accountForm.loginEmailHelpClass,
-loginEmailHelp : accountForm.loginEmailHelp,
-loginInputPassword : accountForm.loginInputPassword,
-loginPasswordHelpClass : accountForm.loginPasswordHelpClass,
-loginPasswordHelp : accountForm.loginPasswordHelp,
-loginEmailFlag : accountForm.loginEmailFlag,
-loginPasswordFlag : accountForm.loginPasswordFlag,
-validSession : user.validSession
+  apiUrl : apiUrl.value,
+  loginInputEmail : accountForm.loginInputEmail,
+  loginEmailHelpClass : accountForm.loginEmailHelpClass,
+  loginEmailHelp : accountForm.loginEmailHelp,
+  loginInputPassword : accountForm.loginInputPassword,
+  loginPasswordHelpClass : accountForm.loginPasswordHelpClass,
+  loginPasswordHelp : accountForm.loginPasswordHelp,
+  loginEmailFlag : accountForm.loginEmailFlag,
+  loginPasswordFlag : accountForm.loginPasswordFlag
 });
 
 export default connect(mapStateToProps, { setLoginInputEmail, setLoginInputPassword, resetStateOfSignupLogin, setValidSession })(Login);

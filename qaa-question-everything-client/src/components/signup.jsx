@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { resetStateOfSignupLogin, setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword, setSignupDone } from '../actions/formActions';
 
@@ -31,12 +31,6 @@ class Signup extends Component {
     }
   };
 
-  renderRedirectValidSession = () => {
-    if(this.props.validSession){
-      return <Redirect to="/" />
-    }
-  };
-
   renderRedirectSignupDone = () => {
     if(this.props.signupDone){
       return <Redirect to="/login" />
@@ -46,7 +40,6 @@ class Signup extends Component {
   render(){
     return(
       <Fragment>
-        { this.renderRedirectValidSession() }
         { this.renderRedirectSignupDone() }
         <hr className="my-4"/>
         <h1 style={{textAlign:"center"}}>Signup</h1>
@@ -74,10 +67,10 @@ class Signup extends Component {
           </div>
           <br/>
           <div style={{textAlign:"center"}}>
-          <button type="submit" className="btn btn-primary btn-lg" disabled={!(this.props.signupFirstnameFlag && this.props.signupLastnameFlag && this.props.signupEmailFlag && this.props.signupPasswordFlag)} onClick={this.handleSignupSubmit}>Submit</button>
-        </div>
-        <hr className="my-4"/>
-        <br/>
+            <button type="submit" className="btn btn-primary btn-lg" disabled={!(this.props.signupFirstnameFlag && this.props.signupLastnameFlag && this.props.signupEmailFlag && this.props.signupPasswordFlag)} onClick={this.handleSignupSubmit}>Submit</button>
+          </div>
+          <hr className="my-4"/>
+          <br/>
         </form>
       </Fragment>
     );
@@ -108,30 +101,28 @@ Signup.propTypes = {
   signupEmailFlag : propTypes.bool.isRequired,
   signupPasswordFlag : propTypes.bool.isRequired,
   signupDone : propTypes.bool.isRequired,
-  setSignupDone : propTypes.func.isRequired,
-  validSession : propTypes.bool.isRequired
+  setSignupDone : propTypes.func.isRequired
 };
 
 const mapStateToProps = ({ accountForm, apiUrl, user }) => ({
-apiUrl : apiUrl.value,
-signupInputFirstname : accountForm.signupInputFirstname,
-signupFirstnameHelpClass : accountForm.signupFirstnameHelpClass,
-signupFirstnameHelp : accountForm.signupFirstnameHelp,
-signupInputLastname : accountForm.signupInputLastname,
-signupLastnameHelpClass : accountForm.signupLastnameHelpClass,
-signupLastnameHelp : accountForm.signupLastnameHelp,
-signupInputEmail : accountForm.signupInputEmail,
-signupEmailHelpClass : accountForm.signupEmailHelpClass,
-signupEmailHelp : accountForm.signupEmailHelp,
-signupInputPassword : accountForm.signupInputPassword,
-signupPasswordHelpClass : accountForm.signupPasswordHelpClass,
-signupPasswordHelp : accountForm.signupPasswordHelp,
-signupFirstnameFlag : accountForm.signupFirstnameFlag,
-signupLastnameFlag : accountForm.signupLastnameFlag,
-signupEmailFlag : accountForm.signupEmailFlag,
-signupPasswordFlag : accountForm.signupPasswordFlag,
-signupDone : accountForm.signupDone,
-validSession : user.validSession
+  apiUrl : apiUrl.value,
+  signupInputFirstname : accountForm.signupInputFirstname,
+  signupFirstnameHelpClass : accountForm.signupFirstnameHelpClass,
+  signupFirstnameHelp : accountForm.signupFirstnameHelp,
+  signupInputLastname : accountForm.signupInputLastname,
+  signupLastnameHelpClass : accountForm.signupLastnameHelpClass,
+  signupLastnameHelp : accountForm.signupLastnameHelp,
+  signupInputEmail : accountForm.signupInputEmail,
+  signupEmailHelpClass : accountForm.signupEmailHelpClass,
+  signupEmailHelp : accountForm.signupEmailHelp,
+  signupInputPassword : accountForm.signupInputPassword,
+  signupPasswordHelpClass : accountForm.signupPasswordHelpClass,
+  signupPasswordHelp : accountForm.signupPasswordHelp,
+  signupFirstnameFlag : accountForm.signupFirstnameFlag,
+  signupLastnameFlag : accountForm.signupLastnameFlag,
+  signupEmailFlag : accountForm.signupEmailFlag,
+  signupPasswordFlag : accountForm.signupPasswordFlag,
+  signupDone : accountForm.signupDone
 });
 
 export default connect(mapStateToProps, { setSignupInputFirstname, setSignupInputLastname, setSignupInputEmail, setSignupInputPassword, resetStateOfSignupLogin, setSignupDone })(Signup);
