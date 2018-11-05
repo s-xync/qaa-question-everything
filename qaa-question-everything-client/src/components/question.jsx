@@ -5,7 +5,12 @@ class Question extends Component{
   render(){
     return(
       <Fragment>
-        {this.props.questionID}
+        <h6>
+          Question ID - {this.props.questionID}
+        </h6>
+        <p>
+          Question details, answers, votes, option to add new answer, option to add votes up or down.
+        </p>
       </Fragment>
     );
   }
