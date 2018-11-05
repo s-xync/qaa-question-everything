@@ -1,7 +1,8 @@
-import { SET_VALID_SESSION, SET_USER_DETAILS, RESET_STATE_OF_USER } from '../actions/types.js';
+import { SET_VALID_SESSION, SET_USER_DETAILS, RESET_STATE_OF_USER, SET_GET_SESSION_FLAG } from '../actions/types.js';
 
 const initialState = {
   validSession : false,
+  getSessionFlag : false,
   userID : "",
   email : "",
   firstName : "",
@@ -17,6 +18,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         validSession : action.payload.flag
+      };
+    }
+
+    case SET_GET_SESSION_FLAG:{
+      return {
+        ...state,
+        getSessionFlag : action.payload.flag
       };
     }
 

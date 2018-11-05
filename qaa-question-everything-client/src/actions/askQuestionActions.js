@@ -1,4 +1,4 @@
-import { SET_HEAD_OF_ASK_QUESTION, SET_BODY_OF_ASK_QUESTION, RESET_STATE_OF_ASK_QUESTION } from './types';
+import { SET_HEAD_OF_ASK_QUESTION, SET_BODY_OF_ASK_QUESTION, RESET_STATE_OF_ASK_QUESTION, SET_ASK_QUESTION_DONE } from './types';
 
 export const resetStateOfAskQuestion = () => (dispatch) => {
   dispatch({
@@ -55,4 +55,11 @@ export const setBodyOfAskQuestion = (event) => (dispatch) => {
       }
     });
   }
+};
+
+export const setAskQuestionDone = () => (dispatch) => {
+  dispatch({
+    type : SET_ASK_QUESTION_DONE,
+    payload : null
+  });
 };

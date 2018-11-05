@@ -1,4 +1,4 @@
-import { SET_HEAD_OF_ASK_QUESTION, SET_BODY_OF_ASK_QUESTION, RESET_STATE_OF_ASK_QUESTION } from '../actions/types';
+import { SET_HEAD_OF_ASK_QUESTION, SET_BODY_OF_ASK_QUESTION, RESET_STATE_OF_ASK_QUESTION, SET_ASK_QUESTION_DONE } from '../actions/types';
 
 const initialState = {
   headAskQuestion : "",
@@ -8,7 +8,8 @@ const initialState = {
   bodyAskQuestion : "",
   bodyAskQuestionHelp : "",
   bodyAskQuestionHelpClass : "",
-  bodyAskQuestionFlag : false
+  bodyAskQuestionFlag : false,
+  askQuestionDone : false
 };
 
 export default (state = initialState, action) => {
@@ -37,6 +38,13 @@ export default (state = initialState, action) => {
         bodyAskQuestionHelp : action.payload.bodyAskQuestionHelp,
         bodyAskQuestionHelpClass : action.payload.bodyAskQuestionHelpClass,
         bodyAskQuestionFlag : action.payload.bodyAskQuestionFlag
+      };
+    }
+
+    case SET_ASK_QUESTION_DONE:{
+      return {
+        ...state,
+        askQuestionDone : true
       };
     }
 

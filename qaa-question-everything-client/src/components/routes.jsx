@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import axios from 'axios';
 import { setApiUrl } from '../actions/apiUrlActions';
-import { setValidSession, setUserDetails } from '../actions/userActions';
+import { setValidSession, setUserDetails, setGetSessionFlag } from '../actions/userActions';
 import App from './app';
 import SignupPage from './signupPage';
 import LoginPage from './loginPage';
@@ -25,6 +25,11 @@ class Routes extends Component{
 
     if((prevProps.validSession !== this.props.validSession) && this.props.validSession){
       this.getSession();
+    }
+
+    if((prevProps.getSessionFlag !== this.props.getSessionFlag) && this.props.getSessionFlag){
+      this.getSession();
+      this.props.setGetSessionFlag(false);
     }
   }
 
@@ -92,12 +97,15 @@ Routes.propTypes = {
   setApiUrl : propTypes.func.isRequired,
   setValidSession : propTypes.func.isRequired,
   validSession : propTypes.bool.isRequired,
-  setUserDetails : propTypes.func.isRequired
+  setUserDetails : propTypes.func.isRequired,
+  setGetSessionFlag : propTypes.func.isRequired,
+  getSessionFlag : propTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ apiUrl, user }) => ({
   apiUrl : apiUrl.value,
-  validSession : user.validSession
+  validSession : user.validSession,
+  getSessionFlag : user.getSessionFlag
 });
 
-export default connect(mapStateToProps, { setApiUrl, setValidSession, setUserDetails })(Routes);
+export default connect(mapStateToProps, { setApiUrl, setValidSession, setUserDetails, setGetSessionFlag })(Routes);
