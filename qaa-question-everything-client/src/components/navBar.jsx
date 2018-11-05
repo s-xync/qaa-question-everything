@@ -13,6 +13,9 @@ class NavBar extends Component {
           <NavItem>
             <NavLink tag={Link} to="/profile">{this.props.firstName + " " + this.props.lastName}</NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink tag={Link} to="/askquestion">Ask Anything!</NavLink>
+          </NavItem>
         </Fragment>
       );
     }else{
