@@ -5,7 +5,7 @@ class Question extends Component{
   render(){
     return(
       <Fragment>
-        {this.props.match.params._id}
+        {this.props.questionID}
       </Fragment>
     );
   }
