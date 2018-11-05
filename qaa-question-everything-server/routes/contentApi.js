@@ -270,6 +270,7 @@ contentApiRouter.post('/voteanswer',
 // GET /api/content/question
 contentApiRouter.get('/question',
 (req, res) => {
+  const { questionID } = req.query;
   const query = {
     _id : questionID,
     isDeleted : false
@@ -287,8 +288,9 @@ contentApiRouter.get('/question',
         message : "Question not found"
       });
     }else{
-      const { head, body, votes, answerIDs, userID } = questions[0];
-      const retrievedQuestionDetails = { head, body, votes, answerIDs, userID };
+      const { _id, head, body, votes, answerIDs, userID } = questions[0];
+      const questionID = _id;
+      const retrievedQuestionDetails = { questionID, head, body, votes, answerIDs, userID };
       return res.json({
         success : true,
         message : "Question found",
@@ -301,6 +303,7 @@ contentApiRouter.get('/question',
 // GET /api/content/answer
 contentApiRouter.get('/answer',
 (req, res) => {
+  const { answerID } = req.query;
   const query = {
     _id : answerID,
     isDeleted : false
@@ -318,8 +321,9 @@ contentApiRouter.get('/answer',
         message : "Answer not found"
       });
     }else{
-      const { body, votes, questionID, userID } = answers[0];
-      const retrievedAnswerDetails = { body, votes, questionID, userID };
+      const { _id, body, votes, questionID, userID } = answers[0];
+      const answerID = _id;
+      const retrievedAnswerDetails = { answerID, body, votes, questionID, userID };
       return res.json({
         success : true,
         message : "Answer found",
