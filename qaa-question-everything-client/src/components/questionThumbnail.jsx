@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 class QuestionThumbnail extends Component{
 
   render(){
-    const { questionID, head, body, userID, votes } = this.props.askedQuestions[this.props.questionID];
+    const { questionID, head, body, userID, votes } = this.props.allQuestions[this.props.questionID];
     return(
       <Fragment>
         <br/>
@@ -25,12 +25,12 @@ class QuestionThumbnail extends Component{
 }
 
 QuestionThumbnail.propTypes = {
-  askedQuestions : propTypes.object,
+  allQuestions : propTypes.object,
   questionID : propTypes.string
 };
 
 const mapStateToProps = ({ questions }) => ({
-  askedQuestions : questions.askedQuestions
+  allQuestions : questions.allQuestions
 });
 
 export default connect(mapStateToProps, {  })(QuestionThumbnail);

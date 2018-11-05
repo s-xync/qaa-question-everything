@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import NavBar from './navBar';
 import Profile from './profile';
-import UserQuestions from './userQuestions';
+import UserAskedQuestions from './userAskedQuestions';
+import UserAnsweredQuestions from './userAnsweredQuestions';
 
 class ProfilePage extends Component {
-  
+
   render(){
     if(this.props.validSession){
       return(
@@ -20,7 +21,11 @@ class ProfilePage extends Component {
             <br/>
             <h1 style={{textAlign:"center"}}>Asked Questions</h1>
             <div className="container">
-              <UserQuestions />
+              <UserAskedQuestions />
+            </div>
+            <h1 style={{textAlign:"center"}}>Answered Questions</h1>
+            <div className="container">
+              <UserAnsweredQuestions />
             </div>
           </div>
         </Fragment>

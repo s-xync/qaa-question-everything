@@ -12,7 +12,7 @@ class SignupPage extends Component{
     if(this.props.validSession){
       return(
         <Fragment>
-          return <Redirect to="/profile" />
+          return <Redirect to="/" />
         </Fragment>
       );
     }else{

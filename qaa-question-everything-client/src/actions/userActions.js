@@ -1,4 +1,4 @@
-import { SET_VALID_SESSION, SET_USER_DETAILS, REMOVE_STATE_OF_USER } from './types';
+import { SET_VALID_SESSION, SET_USER_DETAILS, RESET_STATE_OF_USER } from './types';
 
 export const setValidSession = (flag) => (dispatch) => {
   dispatch({
@@ -15,9 +15,9 @@ export const setUserDetails = (userDetails) => (dispatch) => {
   });
 };
 
-export const removeStateOfUser = () => (dispatch) => {
+export const resetStateOfUser = () => (dispatch) => {
   dispatch({
-    type : REMOVE_STATE_OF_USER,
+    type : RESET_STATE_OF_USER,
     payload : null
   });
 };

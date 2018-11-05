@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setValidSession, removeStateOfUser } from '../actions/userActions';
+import { setValidSession, resetStateOfUser } from '../actions/userActions';
+import { resetStateOfQuestions } from '../actions/questionsActions';
 
 class Profile extends Component{
 
@@ -15,13 +16,19 @@ class Profile extends Component{
         if(response.data.success){
           localStorage.removeItem('QAA_LOGIN_TOKEN');
           this.props.setValidSession(false);
-          this.props.removeStateOfUser();
+          this.props.resetStateOfUser();
         }else{
           console.log(response.data.message);
         }
       });
     }else{
       this.props.setValidSession(false);
+    }
+  }
+
+  componentWillUnmount(){
+    if(this.props.validSession){
+      this.props.resetStateOfQuestions();
     }
   }
 
@@ -43,14 +50,19 @@ class Profile extends Component{
 
 Profile.propTypes = {
   apiUrl : propTypes.string.isRequired,
-  firstName : propTypes.string,
-  lastName : propTypes.string
+  firstName : propTypes.string.isRequired,
+  lastName : propTypes.string.isRequired,
+  validSession : propTypes.bool.isRequired,
+  setValidSession : propTypes.func.isRequired,
+  resetStateOfUser : propTypes.func.isRequired,
+  resetStateOfQuestions : propTypes.func.isRequired
 };
 
 const mapStateToProps = ({ apiUrl, user }) => ({
   apiUrl : apiUrl.value,
   firstName : user.firstName,
-  lastName : user.lastName
+  lastName : user.lastName,
+  validSession : user.validSession
 });
 
-export default connect(mapStateToProps, { setValidSession, removeStateOfUser })(Profile);
+export default connect(mapStateToProps, { setValidSession, resetStateOfUser, resetStateOfQuestions })(Profile);
