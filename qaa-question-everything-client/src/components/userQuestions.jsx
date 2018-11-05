@@ -35,7 +35,8 @@ class UserQuestions extends Component{
   render(){
     return(
       <Fragment>
-        { this.props.questionIDs.map(questionID => <QuestionThumbnail key={questionID} questionID={questionID} />
+        { this.props.askedQuestionsArray.map((question) =>
+          <QuestionThumbnail key={question.questionID} questionID={question.questionID} />
         ) }
       </Fragment>
     );

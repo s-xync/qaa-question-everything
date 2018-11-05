@@ -7,15 +7,21 @@ import Profile from './profile';
 import UserQuestions from './userQuestions';
 
 class ProfilePage extends Component {
-
+  
   render(){
     if(this.props.validSession){
       return(
         <Fragment>
           <NavBar />
-          <div className="container" style={{marginTop:'3%'}}>
-            <Profile />
-            <UserQuestions />
+          <div style={{marginTop:'3%', marginBottom:'3%'}}>
+            <div className="container">
+              <Profile />
+            </div>
+            <br/>
+            <h1 style={{textAlign:"center"}}>Asked Questions</h1>
+            <div className="container">
+              <UserQuestions />
+            </div>
           </div>
         </Fragment>
       );
