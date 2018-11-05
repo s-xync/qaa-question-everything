@@ -3,23 +3,15 @@ import { SET_VALID_SESSION, SET_USER_DETAILS, REMOVE_STATE_OF_USER } from './typ
 export const setValidSession = (flag) => (dispatch) => {
   dispatch({
     type : SET_VALID_SESSION,
-    payload : {
-      flag : flag
-    }
+    payload : { flag }
   });
 };
 
 export const setUserDetails = (userDetails) => (dispatch) => {
+  const { userID, email, firstName, lastName, questionIDs, answeredQuestionIDs } = userDetails;
   dispatch({
     type : SET_USER_DETAILS,
-    payload : {
-      userID : userDetails._id,
-      email : userDetails.email,
-      firstName : userDetails.firstName,
-      lastName : userDetails.lastName,
-      questionIDs : [...userDetails.questionIDs],
-      answerIDs : [...userDetails.answerIDs]
-    }
+    payload : { userID, email, firstName, lastName, questionIDs, answeredQuestionIDs }
   });
 };
 

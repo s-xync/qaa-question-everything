@@ -287,14 +287,8 @@ contentApiRouter.get('/question',
         message : "Question not found"
       });
     }else{
-      const { retrievedQuestion } = questions[0];
-      const retrievedQuestionDetails = {
-        head : retrievedQuestion.head,
-        body : retrievedQuestion.body,
-        votes : retrievedQuestion.votes,
-        answerIDs : retrievedQuestion.answerIDs,
-        userID : retrievedQuestion.userID
-      };
+      const { head, body, votes, answerIDs, userID } = questions[0];
+      const retrievedQuestionDetails = { head, body, votes, answerIDs, userID };
       return res.json({
         success : true,
         message : "Question found",
@@ -324,13 +318,8 @@ contentApiRouter.get('/answer',
         message : "Answer not found"
       });
     }else{
-      const { retrievedAnswer } = answers[0];
-      const retrievedAnswerDetails = {
-        body : retrievedAnswer.body,
-        votes : retrievedAnswer.votes,
-        questionID : retrievedAnswer.questionID,
-        userID : retrievedAnswer.userID
-      };
+      const { body, votes, questionID, userID } = answers[0];
+      const retrievedAnswerDetails = { body, votes, questionID, userID };
       return res.json({
         success : true,
         message : "Answer found",

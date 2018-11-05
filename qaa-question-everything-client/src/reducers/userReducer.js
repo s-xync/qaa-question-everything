@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
     };
 
     case SET_USER_DETAILS:
-    const { userID, email, firstName, lastName, questionIDs, answerIDs } = action.payload;
+    const { userID, email, firstName, lastName, questionIDs, answeredQuestionIDs } = action.payload;
     return {
       ...state,
       userID,
@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
       firstName,
       lastName,
       questionIDs,
-      answerIDs
+      answeredQuestionIDs
     };
 
     case REMOVE_STATE_OF_USER:

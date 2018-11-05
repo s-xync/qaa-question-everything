@@ -208,8 +208,9 @@ userApiRouter.get('/getsession',
                 message : "User not found"
               });
             }else{
-              const { _id, firstName, lastName, email, questionIDs, answerIDs } = users[0];
-              const userDetails = { _id, firstName, lastName, email, questionIDs, answerIDs };
+              const { _id, firstName, lastName, email, questionIDs, answeredQuestionIDs } = users[0];
+              const userID = _id;
+              const userDetails = { userID, firstName, lastName, email, questionIDs, answeredQuestionIDs };
               return res.json({
                 success : true,
                 message : "Session found",
