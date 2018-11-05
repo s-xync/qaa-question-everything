@@ -98,8 +98,8 @@ Routes.propTypes = {
   setValidSession : propTypes.func.isRequired,
   validSession : propTypes.bool.isRequired,
   setUserDetails : propTypes.func.isRequired,
-  setGetSessionFlag : propTypes.func.isRequired,
-  getSessionFlag : propTypes.bool.isRequired
+  getSessionFlag : propTypes.bool.isRequired,
+  setGetSessionFlag : propTypes.func.isRequired
 };
 
 const mapStateToProps = ({ apiUrl, user }) => ({

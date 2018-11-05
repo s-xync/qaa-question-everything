@@ -53,8 +53,8 @@ class NavBar extends Component {
 
 NavBar.propTypes = {
   validSession : propTypes.bool.isRequired,
-  firstName : propTypes.string,
-  lastName : propTypes.string
+  firstName : propTypes.string.isRequired,
+  lastName : propTypes.string.isRequired
 };
 
 const mapStateToProps = ({ user }) => ({
