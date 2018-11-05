@@ -20,7 +20,7 @@ const userSchema = mongoose.Schema({
   questionIDs : {
     type : [mongoose.Schema.Types.ObjectId]
   },
-  answerIDs : {
+  answeredQuestionIDs : {
     type : [mongoose.Schema.Types.ObjectId]
   },
   createdOn : {

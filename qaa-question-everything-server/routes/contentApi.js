@@ -11,9 +11,8 @@ const contentApiRouter = express.Router();
 * POST /api/content/addanswer
 * POST /api/content/votequestion
 * POST /api/content/voteanswer
-* GET /api/content/userquestions
-* GET /api/content/useranswers
-* GET /api/content/questionanswers
+* GET /api/content/question
+* GET /api/content/answer
 */
 
 // POST /api/content/addquestion
@@ -135,7 +134,7 @@ contentApiRouter.post('/addanswer',
                       message : "Internal server error"
                     });
                   }else{
-                    question.answerIDs.unshift(answer._id);
+                    question.answeredQuestionIDs.unshift(questionID);
                     question.save((err) => {
                       if(err){
                         console.log(err);
@@ -268,98 +267,9 @@ contentApiRouter.post('/voteanswer',
   });
 });
 
-// GET /api/content/userquestions
-contentApiRouter.get('/userquestions',
+// GET /api/content/question
+contentApiRouter.get('/question',
 (req, res) => {
-  const { userID } = req.query;
-  const query = {
-    _id : userID,
-    isDeleted : false
-  };
-  User.find(query, (err, users) => {
-    if(err){
-      console.log(err);
-      return res.json({
-        success : false,
-        message : "Internal server error"
-      });
-    }else if(users.length != 1){
-      return res.json({
-        success : false,
-        message : "User not found"
-      });
-    }else{
-      const query = {
-        userID : userID,
-        isDeleted : false
-      };
-      Question.find(query, null, {sort : {votes : -1, date : -1}}, (err, questions) => {
-        if(err){
-          console.log(err);
-          return res.json({
-            success : false,
-            message : "Internal server error"
-          });
-        }else{
-          return res.json({
-            success : true,
-            message : "Questions retrieval successful",
-            questions : questions
-          });
-        }
-      });
-    }
-  });
-});
-
-// GET /api/content/useranswers
-contentApiRouter.get('/useranswers',
-(req, res) => {
-  const { userID } = req.query;
-  const query = {
-    _id : userID,
-    isDeleted : false
-  };
-  User.find(query, (err, users) => {
-    if(err){
-      console.log(err);
-      return res.json({
-        success : false,
-        message : "Internal server error"
-      });
-    }else if(users.length != 1){
-      return res.json({
-        success : false,
-        message : "User not found"
-      });
-    }else{
-      const query = {
-        userID : userID,
-        isDeleted : false
-      };
-      Answer.find(query, null, {sort : {date : -1}}, (err, answers) => {
-        if(err){
-          console.log(err);
-          return res.json({
-            success : false,
-            message : "Internal server error"
-          });
-        }else{
-          return res.json({
-            success : true,
-            message : "Answers retrieval successful",
-            answers : answers
-          });
-        }
-      });
-    }
-  });
-});
-
-// GET /api/content/questionanswers
-contentApiRouter.get('/questionanswers',
-(req, res) => {
-  const { questionID } = req.query;
   const query = {
     _id : questionID,
     isDeleted : false
@@ -377,24 +287,54 @@ contentApiRouter.get('/questionanswers',
         message : "Question not found"
       });
     }else{
-      const query = {
-        questionID : questionID,
-        isDeleted : false
+      const { retrievedQuestion } = questions[0];
+      const retrievedQuestionDetails = {
+        head : retrievedQuestion.head,
+        body : retrievedQuestion.body,
+        votes : retrievedQuestion.votes,
+        answerIDs : retrievedQuestion.answerIDs,
+        userID : retrievedQuestion.userID
       };
-      Answer.find(query, null, {sort : {votes : -1, date : -1}}, (err, answers) => {
-        if(err){
-          console.log(err);
-          return res.json({
-            success : false,
-            message : "Internal server error"
-          });
-        }else{
-          return res.json({
-            success : true,
-            message : "Answers retrieval successful",
-            answers : answers
-          });
-        }
+      return res.json({
+        success : true,
+        message : "Question found",
+        questionDetails : retrievedQuestionDetails
+      });
+    }
+  });
+});
+
+// GET /api/content/answer
+contentApiRouter.get('/answer',
+(req, res) => {
+  const query = {
+    _id : answerID,
+    isDeleted : false
+  };
+  Answer.find(query, (err, answers) => {
+    if(err){
+      console.log(err);
+      return res.json({
+        success : false,
+        message : "Internal server error"
+      });
+    }else if(answers.length != 1){
+      return res.json({
+        success : false,
+        message : "Answer not found"
+      });
+    }else{
+      const { retrievedAnswer } = answers[0];
+      const retrievedAnswerDetails = {
+        body : retrievedAnswer.body,
+        votes : retrievedAnswer.votes,
+        questionID : retrievedAnswer.questionID,
+        userID : retrievedAnswer.userID
+      };
+      return res.json({
+        success : true,
+        message : "Answer found",
+        answerDetails : retrievedAnswerDetails
       });
     }
   });
