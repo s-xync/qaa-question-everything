@@ -31,7 +31,7 @@ class Routes extends Component{
     if(this.props.apiUrl){
       if(localStorage.getItem('QAA_LOGIN_TOKEN')){
         const qaaLoginToken = JSON.parse(localStorage.getItem('QAA_LOGIN_TOKEN'));
-        axios.get(this.props.apiUrl+"/api/user/checksession",{
+        axios.get(this.props.apiUrl+"/api/user/checksession", {
           params:{
             token : qaaLoginToken
           }
@@ -52,7 +52,7 @@ class Routes extends Component{
     if(this.props.apiUrl){
       if(localStorage.getItem('QAA_LOGIN_TOKEN')){
         const qaaLoginToken = JSON.parse(localStorage.getItem('QAA_LOGIN_TOKEN'));
-        axios.get(this.props.apiUrl+"/api/user/getsession",{
+        axios.get(this.props.apiUrl+"/api/user/getsession", {
           params:{
             token : qaaLoginToken
           }

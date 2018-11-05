@@ -1,7 +1,13 @@
 import { SET_VALID_SESSION, SET_USER_DETAILS, REMOVE_STATE_OF_USER } from '../actions/types.js';
 
 const initialState = {
-  validSession : false
+  validSession : false,
+  userID : "",
+  email : "",
+  firstName : "",
+  lastName : "",
+  questionIDs : [],
+  answeredQuestionIDs : []
 }
 
 export default (state = initialState, action) => {
@@ -21,8 +27,8 @@ export default (state = initialState, action) => {
       email,
       firstName,
       lastName,
-      questionIDs,
-      answeredQuestionIDs
+      questionIDs : [...questionIDs],
+      answeredQuestionIDs : [...answeredQuestionIDs]
     };
 
     case REMOVE_STATE_OF_USER:
