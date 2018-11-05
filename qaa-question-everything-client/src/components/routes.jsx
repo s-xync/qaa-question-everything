@@ -9,6 +9,7 @@ import App from './app';
 import SignupPage from './signupPage';
 import LoginPage from './loginPage';
 import ProfilePage from './profilePage';
+import Question from './question';
 
 class Routes extends Component{
 
@@ -76,6 +77,7 @@ class Routes extends Component{
           <Route path='/signup' exact component={SignupPage} />
           <Route path='/login' exact component={LoginPage} />
           <Route path='/profile' exact component={ProfilePage} />
+          <Route path='/question/:_id' exact component={Question} />
           <Route component={App} />
         </Switch>
       </BrowserRouter>
