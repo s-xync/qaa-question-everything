@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import propTypes from 'prop-types';
 import QuestionThumbnail from './questionThumbnail';
-import { resetStateOfQuestions, appendAskedQuestion, sortAskedQuestions } from '../actions/questionsActions';
+import { resetStateOfQuestions, appendAskedQuestion } from '../actions/questionsActions';
 
 class UserQuestions extends Component{
 
@@ -42,7 +42,14 @@ class UserQuestions extends Component{
   }
 }
 
-//TODO: propTypes
+UserQuestions.propTypes = {
+  questionIDs : propTypes.array.isRequired,
+  validSession : propTypes.bool.isRequired,
+  apiUrl : propTypes.string.isRequired,
+  askedQuestionsArray : propTypes.array.isRequired,
+  resetStateOfQuestions : propTypes.func.isRequired,
+  appendAskedQuestion : propTypes.func.isRequired
+};
 
 const mapStateToProps = ({ user, apiUrl, questions }) => ({
   questionIDs : user.questionIDs,
@@ -51,4 +58,4 @@ const mapStateToProps = ({ user, apiUrl, questions }) => ({
   askedQuestionsArray : questions.askedQuestionsArray
 });
 
-export default connect(mapStateToProps, { resetStateOfQuestions, appendAskedQuestion, sortAskedQuestions })(UserQuestions);
+export default connect(mapStateToProps, { resetStateOfQuestions, appendAskedQuestion })(UserQuestions);
