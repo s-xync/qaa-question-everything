@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import propTypes from 'prop-types';
 import QuestionThumbnail from './questionThumbnail';
-import { resetStateOfQuestions, appendAskedQuestion } from '../actions/questionsActions';
+import { appendAskedQuestion } from '../actions/questionsActions';
 
-class UserQuestions extends Component{
+class UserAskedQuestions extends Component{
 
   componentWillMount(){
     if(this.props.validSession){
@@ -26,12 +26,6 @@ class UserQuestions extends Component{
     }
   }
 
-  componentWillUnmount(){
-    if(this.props.validSession){
-      this.props.resetStateOfQuestions();
-    }
-  }
-
   render(){
     return(
       <Fragment>
@@ -43,12 +37,11 @@ class UserQuestions extends Component{
   }
 }
 
-UserQuestions.propTypes = {
+UserAskedQuestions.propTypes = {
   questionIDs : propTypes.array.isRequired,
   validSession : propTypes.bool.isRequired,
   apiUrl : propTypes.string.isRequired,
   askedQuestionsArray : propTypes.array.isRequired,
-  resetStateOfQuestions : propTypes.func.isRequired,
   appendAskedQuestion : propTypes.func.isRequired
 };
 
@@ -59,4 +52,4 @@ const mapStateToProps = ({ user, apiUrl, questions }) => ({
   askedQuestionsArray : questions.askedQuestionsArray
 });
 
-export default connect(mapStateToProps, { resetStateOfQuestions, appendAskedQuestion })(UserQuestions);
+export default connect(mapStateToProps, { appendAskedQuestion })(UserAskedQuestions);
